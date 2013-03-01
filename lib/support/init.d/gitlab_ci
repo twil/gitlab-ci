@@ -74,10 +74,8 @@ restart() {
   if [ "$PID" -ne 0 -a "$STATUS" -ne 0 ]; then
     echo "Restarting $DESC..."
     kill -USR2 `cat $UNICORN_PID`
-    sudo -u gitlab_ci -H bash -l -c "mkdir -p $PID_PATH && $STOP_SIDEKIQ  > /dev/null  2>&1 &"
-    if [ `whoami` = root ]; then
-      sudo -u gitlab_ci -H bash -l -c "mkdir -p $PID_PATH && $START_SIDEKIQ  > /dev/null  2>&1 &"
-    fi
+    sudo -u gitlab_ci -H bash -l -c "mkdir -p $PID_PATH && $STOP_SIDEKIQ"
+    sudo -u gitlab_ci -H bash -l -c "mkdir -p $PID_PATH && $START_SIDEKIQ"
     echo "$DESC restarted."
   else
     echo "Error, $NAME not running!"
